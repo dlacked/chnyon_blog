@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "인스타그램 야코(광고) 댓글을 효과적으로 판별하는 보팅 모델 제안"
+title:  "[Research] 인스타그램 야코(광고) 댓글을 효과적으로 판별하는 보팅 모델 제안"
 date: 2025-11-13 14:12:54 +0900
-categories: AI ML Preprocessing
+categories: AI ML Voting Research 2학년
 ---
 제목을 눌러 본문을 확인하세요.
 
@@ -43,8 +43,8 @@ accuracy 율과 loss율이 감소하는 걸 볼 때마다
 ## Dataset
 일반적인 댓글 포함 800개의 댓글 데이터를 직접 크롤링하여 연구에 사용하였다.
 
-## Data Preprocessing
-### Comment Preprocessing
+## Data preprocessing
+### Comment preprocessing
 먼저, 실제 인스타 댓글에 존재했던 야코 광고 댓글을 보여줄 것이다.
 ```
 인스타에서 인 플루언서 P양 치면 영,상 바로 나오는데 나도 보고 바로 언팔했어 ㅠㅠ ??
