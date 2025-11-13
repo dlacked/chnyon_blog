@@ -5,4 +5,4 @@ gemspec
 
 gem "bigdecimal"
 gem "logger"
-gem "plainwhite"
+# gem "plainwhite"
