@@ -21,7 +21,7 @@ Id,SalePrice
 etc.
 ```
 
-# Explanation
+# 1st Explanation
 ---
 1461개의 행과 81개의 열을 가진 첫 초대형 데이터 셋을 가지고  
 y_test를 예측하는 도전기가 시작된다!
@@ -127,10 +127,9 @@ df_pred = pd.DataFrame(y_pred, columns=['Id', 'SalePrice'])
 # np.array를 dataFrame으로 변환
 
 df_pred['Id'] = df_pred['Id'].astype('int32')
-df_pred.to_csv('pred.csv', index=False) # csv 파일 추출
+df_pred.to_csv('./answer/pred.csv', index=False) # csv 파일 추출
 ```
 
-# Ranking
----
+## Ranking
 **326**/5,376  
 2025-11-13 20:27:56 +0900
