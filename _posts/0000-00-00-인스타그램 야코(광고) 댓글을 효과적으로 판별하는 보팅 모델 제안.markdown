@@ -2,7 +2,7 @@
 layout: post
 title:  "[Research] 인스타그램 야코(광고) 댓글을 효과적으로 판별하는 보팅 모델 제안"
 date: 2025-11-13 14:12:54 +0900
-categories: AI ML Voting Research 2학년
+categories: AI ML Research 2학년
 ---
 제목을 눌러 본문을 확인하세요.
 

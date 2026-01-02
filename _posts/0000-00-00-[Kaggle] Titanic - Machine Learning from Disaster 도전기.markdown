@@ -2,7 +2,7 @@
 layout: post
 title:  "[Kaggle] Titanic - Machine Learning from Disaster 도전기"
 date: 2025-11-14 12:27:50 +0900
-categories: AI ML Kaggle XGBoost 2학년
+categories: AI ML Kaggle 2학년
 ---
 제목을 눌러 본문을 확인하세요.
 
@@ -22,15 +22,6 @@ PassengerId,Survived
 893,1
 894,0
 Etc.
-```
-You can download an example submission file (gender_submission.csv) on the Data page.
-
-```
-Id,SalePrice
-1461,169000.1
-1462,187724.1233
-1463,175221
-etc.
 ```
 
 # 1st Explanation
@@ -113,6 +104,10 @@ submission_data.to_csv('./answer/pred.csv', index=False)
 ```
 
 ## Ranking
----
 **12,592**/16,529  
 2025-11-13 20:27:56 +0900
+
+# 2nd Explanation
+---
+## Data preprocessing
+### OneHotEncoding, Feature Scaling

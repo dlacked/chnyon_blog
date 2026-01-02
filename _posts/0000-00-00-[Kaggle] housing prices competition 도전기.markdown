@@ -2,7 +2,7 @@
 layout: post
 title:  "[Kaggle] housing prices competition 도전기"
 date: 2025-11-13 19:45:24 +0900
-categories: AI ML Kaggle XGBoost 2학년
+categories: AI ML Kaggle 2학년
 ---
 제목을 눌러 본문을 확인하세요.
 

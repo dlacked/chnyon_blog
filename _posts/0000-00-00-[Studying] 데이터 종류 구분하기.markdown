@@ -1,0 +1,64 @@
+---
+layout: post
+title:  "[Studying] 데이터 종류 구분하기"
+date: 2025-11-28 12:36:36 +0900
+categories: AI Data 2학년
+---
+제목을 눌러 본문을 확인하세요.
+
+# 서론
+---
+이 [게시물]('https://dlacked.github.io/chnyon_blog/ai/ml/kaggle/xgboost/2%ED%95%99%EB%85%84/2025/11/27/Kaggle-housing-prices-competition-Top-2-%EC%9D%98-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9D.html')에 있는 내용을 공부하면서, 데이터를 구분하는 데 조금 어려움을 겪었다.  
+물론 Countinous, Discrete Variables에 관한 개념은 어느정도 인지하고 있었으나,  
+막상 실전에서 데이터를 마주하니 구분이 잘 가지 않아 정리해보고자 해당 게시물을 작성하게 되었다.
+
+# Data Types
+---
+## Numerical Variables
+Numerical Variables는 수치형 데이터를 뜻한다.  
+
+해당 데이터 타입은 preprocessing 전에 미리 그래프를 통하여    
+값의 분포를 히스토그램과 박스플롯으로 시각화하여 확인하는 것이 좋다.
+
+이는 outlier 처리 및 결측치 처리를 위한 기준을 세우는 데 도움이 된다.
+
+두 가지 하위 데이터 타입으로 나눌 수 있다.
+
+- **Continuous Variables**
+
+    특정 범위 내에서 무한하고 연속적인 값을 가질 수 있는 변수다.  
+    **소수점 이하의 값으로 계속해서 더 정밀하게 나누는 것이 가능하다.**
+    키, 몸무게, 온도, 시간 등이 이에 해당한다.
+
+- **Discrete Variables**
+
+    특정 값만 가질 수 있는 변수다.  
+    Continuous Variables와 달리, **소수점 이하의 값으로 나누는 것이 불가능하다.**
+    학생 수, 자동차 수 등이 이에 해당한다.  
+    Binary Variables(0과 1로 표현되는 변수)도 Discrete Variables에 포함된다.
+
+    Numerical Variables와 별개로 Continuous Variables와 Discrete Variables에 대한  
+    값의 분포 그래프를 출력하여 추세를 확인하는 것이 좋다.
+
+한 줄로 요약하면, **개체 수를 세는 것**은 이산 변수이고, **측정하는 것**은 연속 변수이다.
+
+## Categorical Variables
+Categorical Variables는 범주형 데이터로,  
+값은 Numerical이지만 실제 뜻하는 바는 Categorical일 수도 있으므로 주의해야 한다.  
+
+Categorical Variables는 세 가지 하위 데이터 타입으로 나눌 수 있다.
+- **Nominal Variables**
+
+    이름만 있고 순서나 등급이 없는 범주형 변수다.  
+    성별, 혈액형, 도시 이름 등이 이에 해당한다.
+
+- **Ordinal Variables**
+
+    순서나 등급이 있는 범주형 변수다.  
+    교육 수준, 고객 만족도 등이 이에 해당한다.
+
+- **Binary Variables**  
+
+    단 두 가지 범주만을 가지는 변수다.  
+    예/아니오, 성별 등이 이에 해당한다.
+

@@ -2,7 +2,7 @@
 layout: post
 title:  "[Kaggle] housing prices competition Top 2%의 코드 분석(나는 아님)"
 date: 2025-11-27 13:29:33 +0900
-categories: AI ML Kaggle XGBoost 2학년
+categories: AI ML Kaggle 2학년
 ---
 제목을 눌러 본문을 확인하세요.
 
@@ -68,19 +68,20 @@ memory usage: 1.8+ MB
 X.info()를 통해 SalePrice 변수가 잘 삭제되었고,  
 concat이 원하는 대로 진행되었음을 확인할 수 있다.
 
-## 숫자형 변수 구분하기
+## Numerical Variables
 ```py
 numeric = X.select_dtypes(exclude=['object']).drop(['MSSubClass'], axis=1).copy()
 numeric.columns
 ```
 독립 변수의 집합 `X`에서 숫자형 데이터를 추출하기 위해   
 DataFrame에서 데이터 타입이 object인 열을 제외하도록 설정한다.  
+즉, Categorical Variables를 제외한 나머지 열들만 추출한다.
 
 MSSubClass는 숫자형 데이터에 해당하나  
 사실상 '건물 종류'를 구분하는 범주형 변수에 해당하므로  
 object 리스트에 추가하는 것이 바람직하다.
 
-## 이산형 / 연속형 변수 구분하기
+## Splitting into Continuous and Discrete Variables
 ```py
 disc_num_var = ['OverallQual','OverallCond', 'BsmtFullBath', 
                 'BsmtHalfBath','FullBath','HalfBath',
@@ -100,7 +101,7 @@ for i in numeric.columns:
 'YearBuilt', 'YearRemodAdd', 'GarageYrBlt'를 추가로  
 `disc_num_var`에 추가해보았다.
 
-## 범주형 변수 구분하기
+## Categorical Variables
 ```py
 categorical = X.select_dtypes(include=['object']).copy()
 categorical['MSSubClass'] = X['MSSubClass']
@@ -118,7 +119,7 @@ MSSubClass는 단순히 건물의 종류를 나타내는 **코드**일 뿐이므
 
 # Visualize
 ---
-## Numerical Variable Value Distribution
+## Continuous Variable Value Distribution
 ```py
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -140,7 +141,8 @@ fig.tight_layout(pad=1) #레이아웃 조정
 
 해당 조건에 해당하는 변수는 다음과 같다.  
 BsmtFinSF2, LowQualFinSF, EnclosedPorch, 3SsnPorch, ScreenPorch, PoolArea, MiscVal
-## Numerical Variable Outlier Distribution
+
+## Continuous Variable Outlier Distribution
 ```py
 fig = plt.figure(figsize=(14, 15))
 for index, col in enumerate(cont_num_var):
@@ -189,7 +191,8 @@ Street, Utilities, Condition2, RoofMatl, Heating, (Functional)
 ---
 ## Correlation Matrix
 2개의 다른 특징을 살펴보고 해당 특징 간 가능한 관계나 독튼한 패턴을 식별한다.  
-일반적으로 사용되는 기술은 Correlation Matrix를 사용하는 것이다.
+일반적으로 사용되는 기술은 Numerical Variables를 대상으로  
+Correlation Matrix를 사용하는 것이다.
 
 Correlation Matrix는 2개의 연속적인 특징 간의 선형(상관) 관계를 발견하는 효과적인 도구다.  
 상관 관계는 종속 변수에 중요한 특징을 결정할 수 있을 뿐 아니라  
@@ -209,6 +212,8 @@ GarageCars와 GarageArea, GarageYrBlt와 YearBuilt, TotRmsAbvGrd와 GrLivArea,
 ## Correlation with SalePrice(Target Column)
 ```py
 numeric_train = df_train.select_dtypes(exclude=['object'])
+# SalePrice가 포함된 train 데이터에서 숫자형 변수만 추출
+
 correlation = numeric_train.corr()
 correlation[['SalePrice']].sort_values(['SalePrice'], ascending=False).head(10)
 ```
@@ -330,20 +335,20 @@ missing_count.columns = ['features', 'sum']
 sns.barplot(x='features', y='sum', data=missing_count)
 ```
 
-## Replacing the Values of the NA Continuous Features to "NA"
+## Replacing the Values of the NA Ordinal Features to "NA"
 ```py
 cat = ['GarageType','GarageFinish','BsmtFinType2','BsmtExposure','BsmtFinType1',
        'GarageCond','GarageQual','BsmtCond','BsmtQual','FireplaceQu','Fence',
        "KitchenQual","HeatingQC",'ExterQual','ExterCond'] # The Continuous Features which have NA Value(s)
 X[cat] = X[cat].fillna("NA")
 ```
-순서형 피쳐는 값들 사이에 명확한 순서나 등급이 있기 때문에  
-결측치 처리 시 평균이나 중앙값으로 대체하는 것은 적절하지 않을 수 있다.
-순서형 피쳐는 "NA"라는 새로운 등급을 부여하여 처리하는 것이 분석을 더 의미있게 할 수 있다.
+Ordinal Variables는 값들 사이에 명확한 순서나 등급이 있기 때문에  
+결측치 처리 시 평균이나 중앙값으로 대체하는 것은 적절하지 않을 수 있다.  
+"NA"라는 새로운 등급을 부여하여 처리하는 것이 분석을 더 의미있게 할 수 있다.
 
 ## Replacing the Values of the NA Categorical Features
 ```py
-cols = ['MasVnrType', 'MSZoning', 'Exterior1st', 'Exterior2nd', 'SaleType',             'Electrical', 'Functional']
+cols = ['MasVnrType', 'MSZoning', 'Exterior1st', 'Exterior2nd', 'SaleType', 'Electrical', 'Functional']
 pd.set_option('future.no_silent_downcasting', True)
 
 X[cols] = X.groupby('Neighborhood')[cols].transform(lambda x: x.fillna(x.mode().iloc[0] if not x.mode().empty else 'Unknown'))
@@ -353,15 +358,15 @@ X[cols] = X.groupby('Neighborhood')[cols].transform(lambda x: x.fillna(x.mode().
 결측치가 있는 변수들의 최빈값을 찾아 결측치를 채우는 방식을 적용해보았다.  
 해당 방법은 특정 동네의 특성에 맞게 결측치가 대체되므로 더 의미 있는 데이터가 만들어진다.
 
-## Replacing the Values of the NA Numerical Features
+## Replacing the Values of the NA Continuous Features
 ```py
 cont = ["BsmtHalfBath", "BsmtFullBath", "BsmtFinSF1", "BsmtFinSF2", 
         "BsmtUnfSF", "TotalBsmtSF", "MasVnrArea"]
 X[cont] = X[cont].fillna(X[cont].mean())
 ```
-수치형 피쳐는 보통 평균값으로 대체하는 방식이 가장 일반적이다.  
+Continuous Features는 보통 평균값으로 대체하는 방식이 가장 일반적이다.  
 
-하지만 어떤 수치형 피쳐는 Neighborhood마다 값의 차이가 클 수 있다.  
+하지만 어떤 Continuous Features는 Neighborhood마다 값의 차이가 클 수 있다.  
 이런 경우, 전체 평균을 사용해 결측치를 대체하면 큰 오차가 발생할 수 있다.
 
 **도메인 지식을 활용하여 데이터를 이해하고 각 변수의 특성에 맞게**  
@@ -668,7 +673,7 @@ print(model_performances.sort_values(by='RMSE'))
 CatBoost 모델이 가장 뛰어난 성능을 보이는 것으로 확인된다.
 
 ## Blending
-```
+```py
 def blend_models_predict(X, b, c, d):
     return (b * xgb.predict(X) + c * lgbm.predict(X) + d * cb.predict(X))
 
